@@ -50,7 +50,7 @@ const UserCard = ({ name, username, description }: UserCardProps) => {
 export const Footer = () => {
 	return (
 		<Content as="footer" border="border-t" className="py-4">
-			<p className="text-muted-foreground">
+			<div className="text-muted-foreground">
 				Developed by{" "}
 				<UserCard
 					name="Anish Pallati"
@@ -68,7 +68,7 @@ export const Footer = () => {
 					PantherHack 2023
 				</Link>
 				.
-			</p>
+			</div>
 		</Content>
 	);
 };

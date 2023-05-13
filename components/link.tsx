@@ -14,15 +14,16 @@ type BaseLinkProps = Omit<
 
 interface LinkProps extends Omit<BaseLinkProps, "target"> {
 	newWindow?: boolean;
+	hideUnderline?: boolean;
 }
 
 export const Link = (props: PropsWithChildren<LinkProps>) => {
-	const { className, newWindow, ...rest } = props;
+	const { className, newWindow, hideUnderline, ...rest } = props;
 	const target = newWindow ? "_blank" : "_self";
 
 	return (
 		<NextLink
-			className={cn("underline", className)}
+			className={cn(hideUnderline || "underline", className)}
 			target={target}
 			{...rest}
 		/>

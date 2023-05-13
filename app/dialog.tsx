@@ -28,8 +28,9 @@ export const AskDialog = () => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline">Ask ChatGPT</Button>
+				<Button>Ask ChatGPT</Button>
 			</DialogTrigger>
+
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Ask ChatGPT</DialogTitle>
