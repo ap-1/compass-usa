@@ -17,7 +17,11 @@ const satoshi = localFont({
 
 export const StyleProvider = ({ children }: PropsWithChildren) => {
 	return (
-		<ThemeProvider attribute="class" enableColorScheme={false}>
+		<ThemeProvider
+			attribute="class"
+			enableColorScheme={false}
+			defaultTheme="dark"
+		>
 			<style jsx global>
 				{`
 					:root {
