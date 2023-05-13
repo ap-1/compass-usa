@@ -1,10 +1,13 @@
 import { Navbar } from "@/components/navbar";
+import { Content } from "@/components/content";
 
 export default function Home() {
 	return (
 		<>
 			<Navbar title="Home" />
-			<main>Content</main>
+			<Content as="main" className="py-4">
+				Content
+			</Content>
 		</>
 	);
 }
