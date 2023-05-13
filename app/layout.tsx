@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/app/theme";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Footer } from "@/components/footer";
 
 import type { PropsWithChildren } from "react";
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 				<body className={cn(satoshi.variable, "font-sans antialiased")}>
 					<ThemeProvider fontVariable={satoshi.variable}>
 						{children}
+						<Footer />
 					</ThemeProvider>
 				</body>
 			</html>
