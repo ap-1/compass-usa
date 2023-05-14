@@ -4,22 +4,8 @@ import { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { icons, type Topic } from "@/app/compass/page";
 
-import superjson from "superjson";
 import { Send, Trash } from "lucide-react";
-
-async function getData(prompt: string) {
-	const res = await fetch("/api/query", {
-		method: "POST",
-		body: superjson.stringify({ prompt }),
-	});
-
-	if (!res.ok) {
-		console.error(await res.json());
-		throw new Error("Failed to fetch data");
-	}
-
-	return res.json();
-}
+import superjson from "superjson";
 
 const textVariants = cva("flex flex-row items-center", {
 	variants: {
@@ -50,6 +36,20 @@ type Message = {
 	sender: string;
 	text: string;
 };
+
+async function getData(prompt: string) {
+	const res = await fetch("/api/query", {
+		method: "POST",
+		body: superjson.stringify({ prompt }),
+	});
+
+	if (!res.ok) {
+		console.error(await res.json());
+		throw new Error("Failed to fetch data");
+	}
+
+	return res.json();
+}
 
 export const Helper = ({ topic }: HelperProps) => {
 	const [messages, setMessages] = useState<Message[]>([]);
