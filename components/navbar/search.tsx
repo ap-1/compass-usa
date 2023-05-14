@@ -36,9 +36,8 @@ export const Search = () => {
 
 	useEffect(() => {
 		const down = (e: KeyboardEvent) => {
-			// e.preventDefault();
-
 			if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+				e.preventDefault();
 				setOpen((open) => !open);
 			} else if (["Esc", "Escape"].includes(e.key)) {
 				setOpen(false);
@@ -81,7 +80,7 @@ export const Search = () => {
 					autoFocus
 					placeholder="Type a command or search..."
 				/>
-				<CommandList>
+				<CommandList className="pb-1">
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Pages">
 						{pages.map((page) => (
@@ -109,7 +108,7 @@ export const Search = () => {
 						))}
 					</CommandGroup>
 
-					<CommandGroup heading="Links" className="mb-1">
+					<CommandGroup heading="Links">
 						{links.map((link) => (
 							<CommandItem
 								key={link.title}
