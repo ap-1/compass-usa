@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Compass, Menu, Sun, MoonStar, X } from "lucide-react";
+import { Compass, Menu, Sun, MoonStar, X, type LucideIcon } from "lucide-react";
 
 import { Link } from "@/components/link";
 import { Button } from "@/components/ui/button";
@@ -52,11 +52,15 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ title }: NavbarProps) => {
-	const [menuOpen, setMenuOpen] = useState(false);
 	const { theme, setTheme } = useTheme();
+	const [ThemeIcon, setThemeIcon] = useState<LucideIcon>(Sun);
+	const [menuOpen, setMenuOpen] = useState(false);
 
 	const MenuIcon = menuOpen ? X : Menu;
-	const ThemeIcon = theme === "dark" ? Sun : MoonStar;
+
+	useEffect(() => {
+		setThemeIcon(theme === "dark" ? Sun : MoonStar);
+	}, [theme]);
 
 	return (
 		<Content as="nav" border="border-b" className=" flex flex-col">
