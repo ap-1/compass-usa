@@ -20,8 +20,10 @@ import {
 	MoonStar,
 	UserPlus,
 	UserMinus,
+	MessagesSquare,
 	Search as SearchIcon,
 } from "lucide-react";
+import { AskDialog } from "./dialog";
 
 const themes = [
 	{
@@ -37,6 +39,7 @@ const themes = [
 ] as const;
 
 export const Search = () => {
+	const [dialogOpen, setDialogOpen] = useState(false);
 	const [open, setOpen] = useState(false);
 	const { setTheme } = useTheme();
 	const { signOut, openSignIn } = useClerk();
@@ -65,6 +68,8 @@ export const Search = () => {
 
 	return (
 		<>
+			<AskDialog open={dialogOpen} setOpen={setDialogOpen} />
+
 			<Button
 				asChild
 				variant="outline"
@@ -130,6 +135,11 @@ export const Search = () => {
 					</CommandGroup>
 
 					<CommandGroup heading="Utility">
+						<CommandItem value="askChatGPT" onSelect={handler(() => setDialogOpen(true))}>
+							<MessagesSquare className="w-4 h-4 mr-2" />
+							Ask ChatGPT
+						</CommandItem>
+
 						<SignedIn>
 							<CommandItem
 								value="signOut"

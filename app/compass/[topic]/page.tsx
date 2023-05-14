@@ -290,11 +290,9 @@ export default function TopicHelper({ params }: TopicHelperParams) {
 										</p>
 
 										{sources.map((source, index) => (
-											<div key={index}>
-												<p className="text-sm">
-													{source}{" "}
-												</p>
-											</div>
+											<p key={index} className="text-sm">
+												{source}
+											</p>
 										))}
 									</div>
 
@@ -305,11 +303,9 @@ export default function TopicHelper({ params }: TopicHelperParams) {
 										</p>
 
 										{links.map((link, index) => (
-											<div key={index}>
-												<p className="text-sm">
-													{link}
-												</p>
-											</div>
+											<p key={index} className="text-sm">
+												{link}
+											</p>
 										))}
 									</div>
 								</div>

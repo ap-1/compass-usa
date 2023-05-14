@@ -1,6 +1,12 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import {
+	useRef,
+	useState,
+	type FormEvent,
+	type Dispatch,
+	type SetStateAction,
+} from "react";
 import { Loader2 } from "lucide-react";
 import superjson from "superjson";
 
@@ -10,7 +16,6 @@ import {
 	DialogDescription,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -30,7 +35,12 @@ async function getData(prompt: string) {
 	return res.json();
 }
 
-export const AskDialog = () => {
+interface AskDialogProps {
+	open: boolean;
+	setOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+export const AskDialog = ({ open, setOpen }: AskDialogProps) => {
 	const queryRef = useRef<HTMLTextAreaElement>(null);
 	const [submitting, setSubmitting] = useState(false);
 
@@ -40,18 +50,18 @@ export const AskDialog = () => {
 		const query = queryRef.current?.value;
 		if (!query) return;
 
+		setSubmitting(true);
 		getData(query)
 			.then((data) => alert(data.message))
 			.catch(console.error)
-			.finally(() => setSubmitting(false));
+			.finally(() => {
+				setSubmitting(false);
+				setOpen(false);
+			});
 	};
 
 	return (
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button>Ask ChatGPT</Button>
-			</DialogTrigger>
-
+		<Dialog open={open}>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
 					<DialogTitle>Ask ChatGPT</DialogTitle>
@@ -75,7 +85,7 @@ export const AskDialog = () => {
 					<Button type="submit" disabled={submitting}>
 						{submitting ? (
 							<>
-								<Loader2 className="w-4 h-4 mr-2" />
+								<Loader2 className="animate-spin w-4 h-4 mr-2" />
 								Sending...
 							</>
 						) : (
