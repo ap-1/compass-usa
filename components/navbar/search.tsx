@@ -61,11 +61,11 @@ export const Search = () => {
 				asChild
 				variant="outline"
 				onClick={() => setOpen(true)}
-				className="pl-4 pr-2 w-full md:w-80"
+				className="w-full pl-4 pr-2 md:w-80"
 			>
 				<div className="flex flex-row justify-between h-10">
 					<div className="flex flex-row gap-2">
-						<SearchIcon className="my-auto h-4 w-4" />
+						<SearchIcon className="w-4 h-4 my-auto" />
 						Search Compass...
 					</div>
 
@@ -89,7 +89,7 @@ export const Search = () => {
 								value={page.href}
 								onSelect={handler(router.push)}
 							>
-								<page.Icon className="mr-2 h-4 w-4" />
+								<page.Icon className="w-4 h-4 mr-2" />
 								{page.title}
 							</CommandItem>
 						))}
@@ -102,7 +102,7 @@ export const Search = () => {
 								value={theme.value}
 								onSelect={handler(setTheme)}
 							>
-								<theme.Icon className="mr-2 h-4 w-4" />
+								<theme.Icon className="w-4 h-4 mr-2" />
 								{theme.name}
 							</CommandItem>
 						))}
@@ -117,7 +117,7 @@ export const Search = () => {
 									window.open(href, "_blank")
 								)}
 							>
-								<link.Icon className="mr-2 h-4 w-4" />
+								<link.Icon className="w-4 h-4 mr-2" />
 								{link.title}
 							</CommandItem>
 						))}

@@ -24,7 +24,7 @@ const Arrow = forwardRef<HTMLDivElement, ArrowProps>(
 		return (
 			<div
 				ref={arrowRef}
-				className="absolute top-1/2 left-1/2 w-2 h-2 border-4 rounded-full border-white"
+				className="absolute w-2 h-2 border-4 border-white rounded-full top-1/2 left-1/2"
 				style={{ rotate: `${angle - 45}deg` }}
 			>
 				<MousePointer2 className="rotate-180" />
@@ -49,7 +49,7 @@ const ItemButton = ({ topic, setTopic }: ItemButtonProps) => {
 		<Button
 			variant="ghost"
 			onClick={() => setTopic(topic)}
-			className="my-2 mx-3 rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform "
+			className="p-2 mx-3 my-2 text-black transition-transform rounded-lg dark:text-white hover:scale-105 "
 		>
 			<Icon />
 			<span className="ml-2">{text}</span>
@@ -88,7 +88,7 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 	return (
 		<>
 			<div className="flex flex-col items-start">
-				<p className="text-3xl font-extrabold uppercase text-center mb-8">
+				<p className="mb-8 text-3xl font-extrabold text-center uppercase">
 					Welcome to the Compass.
 				</p>
 				<p>
@@ -97,8 +97,8 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 					}
 				</p>
 
-				<div className="flex flex-row mt-4 justify-center items-center">
-					<ArrowRightSquare className="inline-block h-12 w-12 mr-2 " />
+				<div className="flex flex-row items-center justify-center mt-4">
+					<ArrowRightSquare className="inline-block w-12 h-12 mr-2 " />
 					<p className="font-semibold">
 						{
 							"To get started, click on one of the categories to the right. You'll be presented with a list of resources that can help you."
@@ -106,7 +106,7 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 					</p>
 				</div>
 
-				<div className="flex-row flex mt-4 items-center ">
+				<div className="flex flex-row items-center mt-4 ">
 					<Image
 						src="/computers.png"
 						alt="Computers"
@@ -115,13 +115,13 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 						width={400}
 					/>
 
-					<div className="ml-4  ">
-						<div className="text-xl font-semibold flex flex-row items-center">
-							<Search className=" h-6 w-6 mr-4 " />
+					<div className="ml-4 ">
+						<div className="flex flex-row items-center text-xl font-semibold">
+							<Search className="w-6 h-6 mr-4 " />
 							Find what you need
 						</div>
 
-						<div className=" mt-2">
+						<div className="mt-2 ">
 							<p className="text-sm">
 								{
 									"Technology is invaluable in today's world. We can help you find the right resources to help you with any health, employment, legal, or housing needs you may have."
@@ -133,11 +133,11 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 			</div>
 
 			<div className="flex flex-row justify-center w-full">
-				<div className="flex  items-center">
+				<div className="flex items-center">
 					<ItemButton topic="Health" setTopic={setTopic} />
 				</div>
 
-				<div className="flex flex-col justify-center items-center ">
+				<div className="flex flex-col items-center justify-center ">
 					<ItemButton topic="Jobs" setTopic={setTopic} />
 
 					<div className="relative rounded-full border-8 border-black dark:bg-blue-600 bg-blue-500 dark:border-white h-60 w-60 bg-[url(/tickmarks.png)] bg-contain bg-center">
@@ -147,7 +147,7 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 					<ItemButton topic="Legal" setTopic={setTopic} />
 				</div>
 
-				<div className="flex  items-center">
+				<div className="flex items-center">
 					<ItemButton topic="Housing" setTopic={setTopic} />
 				</div>
 			</div>

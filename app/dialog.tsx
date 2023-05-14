@@ -75,7 +75,7 @@ export const AskDialog = () => {
 					<Button type="submit" disabled={submitting}>
 						{submitting ? (
 							<>
-								<Loader2 className="mr-2 h-4 w-4" />
+								<Loader2 className="w-4 h-4 mr-2" />
 								Sending...
 							</>
 						) : (
