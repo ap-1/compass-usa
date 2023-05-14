@@ -87,7 +87,7 @@ export const Search = () => {
 						{pages.map((page) => (
 							<CommandItem
 								key={page.title}
-								value={page.href}
+								value={page.title}
 								onSelect={handler(router.push)}
 							>
 								<page.Icon className="mr-2 h-4 w-4" />
@@ -113,7 +113,7 @@ export const Search = () => {
 						{links.map((link) => (
 							<CommandItem
 								key={link.title}
-								value={link.href}
+								value={link.title}
 								onSelect={handler((href) =>
 									window.open(href, "_blank")
 								)}
