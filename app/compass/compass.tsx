@@ -21,14 +21,36 @@ interface ArrowProps {
 
 const Arrow = forwardRef<HTMLDivElement, ArrowProps>(
 	({ angle }: ArrowProps, arrowRef) => {
+		const nearestQuadrant = Math.round(angle / 90) * 90;
+
 		return (
-			<div
-				ref={arrowRef}
-				className="absolute w-2 h-2 border-4 border-white rounded-full top-1/2 left-1/2"
-				style={{ rotate: `${angle - 45}deg` }}
-			>
-				<MousePointer2 className="rotate-180" />
-			</div>
+			<>
+				<div
+					ref={arrowRef}
+					className="absolute w-2 h-2 pointer-events-none top-1/2 left-1/2"
+					style={{
+						rotate: `${nearestQuadrant - 45}deg`,
+					}}
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						className="w-40 h-40 rotate-90 -translate-x-1/2 -translate-y-1/2"
+						viewBox="0 0 48 48"
+					>
+						<path
+							className="fill-blue-600 dark:fill-blue-500"
+							d="M24 4a20 20 0 0 1 20 20H24V4Z"
+						/>
+					</svg>
+				</div>
+				<div
+					ref={arrowRef}
+					className="absolute w-2 h-2 border-4 border-white rounded-full top-1/2 left-1/2"
+					style={{ rotate: `${angle - 45}deg` }}
+				>
+					<MousePointer2 className="rotate-180" />
+				</div>
+			</>
 		);
 	}
 );
@@ -65,17 +87,32 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 	const [arrowAngle, setArrowAngle] = useState(0);
 	const arrowRef = useRef<HTMLDivElement>(null!);
 
+	const getArrowAngle = (event: MouseEvent) => {
+		const arrowRect = arrowRef.current.getBoundingClientRect();
+		const arrowCenterX = arrowRect.left + arrowRect.width / 2;
+		const arrowCenterY = arrowRect.top + arrowRect.height / 2;
+
+		const deltaX = event.clientX - arrowCenterX;
+		const deltaY = event.clientY - arrowCenterY;
+
+		const radians = Math.atan2(deltaY, deltaX);
+		const degrees = (radians * 180) / Math.PI;
+
+		return degrees;
+	};
+
+	const fastClick = (event: MouseEvent) => {
+		const degrees = getArrowAngle(event);
+		const nearestQuadrant = (Math.round(degrees / 90) * 90) % 360;
+		const quadrant = [-90, -0, 90, 180].indexOf(nearestQuadrant);
+		const topics = ["Jobs", "Housing", "Legal", "Health"];
+
+		setTopic(topics[quadrant] as Topic);
+	};
+
 	useEffect(() => {
 		const updateArrowAngle = (event: MouseEvent) => {
-			const arrowRect = arrowRef.current.getBoundingClientRect();
-			const arrowCenterX = arrowRect.left + arrowRect.width / 2;
-			const arrowCenterY = arrowRect.top + arrowRect.height / 2;
-
-			const deltaX = event.clientX - arrowCenterX;
-			const deltaY = event.clientY - arrowCenterY;
-
-			const radians = Math.atan2(deltaY, deltaX);
-			const degrees = (radians * 180) / Math.PI;
+			const degrees = getArrowAngle(event);
 
 			setArrowAngle(degrees);
 		};
@@ -140,7 +177,10 @@ export const Selector = ({ setTopic }: SelectorProps) => {
 				<div className="flex flex-col items-center justify-center ">
 					<ItemButton topic="Jobs" setTopic={setTopic} />
 
-					<div className="relative rounded-full border-8 border-black dark:bg-blue-600 bg-blue-500 dark:border-white h-60 w-60 bg-[url(/tickmarks.png)] bg-contain bg-center">
+					<div
+						className="relative rounded-full border-8 border-black dark:bg-blue-600 bg-blue-500 dark:border-white h-60 w-60 bg-[url(/tickmarks.png)] bg-contain bg-center"
+						onClick={fastClick as any}
+					>
 						<Arrow angle={arrowAngle} ref={arrowRef} />
 					</div>
 
