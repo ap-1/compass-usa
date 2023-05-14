@@ -61,7 +61,7 @@ export const Search = () => {
 				onClick={() => setOpen(true)}
 				className="pl-4 pr-2 w-full md:w-80"
 			>
-				<div className="flex justify-between">
+				<div className="flex flex-row justify-between h-10">
 					<div className="flex flex-row gap-2">
 						<SearchIcon className="my-auto h-4 w-4" />
 						Search Compass...
@@ -103,7 +103,7 @@ export const Search = () => {
 						))}
 					</CommandGroup>
 
-					<CommandGroup heading="Links">
+					<CommandGroup heading="Links" className="mb-1">
 						{links.map((link) => (
 							<CommandItem
 								key={link.title}

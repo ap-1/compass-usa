@@ -17,7 +17,7 @@ export const Content = (
 
 	return (
 		<Component className={border ?? ""} {...rest}>
-			<div className={cn("mx-auto max-w-6xl px-8", className)}>
+			<div className={cn("mx-auto max-w-7xl px-8", className)}>
 				{children}
 			</div>
 		</Component>
