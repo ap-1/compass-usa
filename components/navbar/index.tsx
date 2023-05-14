@@ -90,7 +90,7 @@ export const Navbar = ({ title }: NavbarProps) => {
 
 					<Button
 						variant="outline"
-						className="px-2 ml-2 md:ml-0 block lg:hidden"
+						className="px-2 ml-2 md:ml-0 lg:hidden"
 						asChild
 					>
 						<MenuIcon
