@@ -3,7 +3,15 @@
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Compass, Menu, Sun, MoonStar, X, type LucideIcon } from "lucide-react";
+import {
+	Compass,
+	Menu,
+	UserPlus,
+	Sun,
+	MoonStar,
+	X,
+	type LucideIcon,
+} from "lucide-react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { Link } from "@/components/link";
@@ -33,12 +41,19 @@ const Auth = ({ className }: AdditionalProps) => {
 		<div className={className}>
 			<SignedIn>
 				<div className="pt-0 pr-1 lg:pt-1 lg:pr-0">
-					<UserButton />
+					<UserButton
+						appearance={{
+							elements: {
+								userButtonPopoverFooter: "hidden",
+							},
+						}}
+					/>
 				</div>
 			</SignedIn>
 			<SignedOut>
-				<Button>
-					<SignInButton />
+				<Button className="flex flex-row gap-2">
+					<SignInButton mode="modal" />
+					<UserPlus className="w-4 h-4" />
 				</Button>
 			</SignedOut>
 		</div>
@@ -59,8 +74,12 @@ const NavMenu = ({ className, title }: AdditionalProps) => {
 							passHref
 						>
 							<NavigationMenuLink
-								className={cn(navigationMenuTriggerStyle())}
+								className={cn(
+									navigationMenuTriggerStyle(),
+									"flex flex-row gap-2"
+								)}
 							>
+								<page.Icon className="w-4 h-4" />
 								{page.title}
 							</NavigationMenuLink>
 						</Link>
@@ -97,7 +116,7 @@ export const Navbar = ({ title }: NavbarProps) => {
 					>
 						<Compass className="w-8 h-8 group-hover:animate-spin" />
 						<span
-							className="bg-white bg-clip-text group-hover:bg-gradient-to-r from-white to-red-400"
+							className="bg-primary bg-clip-text group-hover:bg-gradient-to-r from-primary to-red-400"
 							style={{
 								WebkitTextFillColor: "transparent",
 							}}

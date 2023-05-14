@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
-import { pages, links } from "@/components/navbar/pages";
+import { pages, topicPages, links } from "@/components/navbar/pages";
 import {
 	CommandDialog,
 	CommandEmpty,
@@ -84,6 +84,19 @@ export const Search = () => {
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Pages">
 						{pages.map((page) => (
+							<CommandItem
+								key={page.title}
+								value={page.href}
+								onSelect={handler(router.push)}
+							>
+								<page.Icon className="w-4 h-4 mr-2" />
+								{page.title}
+							</CommandItem>
+						))}
+					</CommandGroup>
+
+					<CommandGroup heading="Topics">
+						{topicPages.map((page) => (
 							<CommandItem
 								key={page.title}
 								value={page.href}

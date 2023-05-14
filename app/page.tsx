@@ -1,106 +1,129 @@
+"use client";
+
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+
+import { Link } from "@/components/link";
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
-import { AskDialog } from "@/app/dialog";
-import Image from "next/image";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
 	return (
 		<>
 			<Navbar title="Home" />
-			<Content as="main" className="py-4">
-				{/* <AskDialog /> */}
-				<div className="grid grid-cols-2">
-					<div className=" ">
-						<h1 className="uppercase font-extrabold text-4xl mb-4">
+			<Content as="main" className="py-8">
+				<div className="flex flex-col sm:flex-row">
+					<div>
+						<h1 className="mb-4 text-4xl font-extrabold uppercase">
 							Get answers to your immigration questions
 						</h1>
-						<p className="  mb-4">
+						<p className="mb-4 ">
 							{
 								"Our app uses ChatGPT to provide accurate and reliable answers to a wide range of immigration-related questions. Whether you're looking for information about visas, work permits, or citizenship, we've got you covered."
 							}
 						</p>
-						<Link
-							href="/compass"
-							className=" border-2 border-primary rounded-lg px-2 py-1"
-						>
-							Get Started
-						</Link>{" "}
-						<div className="grid grid-cols-4 border-t-2 border-primary mt-4 mr-4 gap-4 py-4">
-							<div className="bg-red-500 rounded-lg p-2">
-								<p className="font-bold">HEALTH</p>
-								<p className="mt-2 text-sm  ">
-									Answer questions about health insurance,
-									medical care, and more.
-								</p>
-							</div>
-							<div className="bg-green-500 rounded-lg p-2">
-								<p className="font-bold">JOBS</p>
-								<p className="mt-2 text-sm  ">
-									Answer questions about employment, taxes,
-									and more.
-								</p>
-							</div>
-							<div className="bg-yellow-500 rounded-lg p-2">
-								<p className="font-bold">HOUSING</p>
-								<p className="mt-2 text-sm  ">
-									Answer questions about housing, rent, and
-									more.
-								</p>
-							</div>
-							<div className="bg-purple-500 rounded-lg p-2">
-								<p className="font-bold">LEGAL</p>
-								<p className="mt-2 text-sm  ">
-									Answer questions about legal status,
-									citizenship, and more.
-								</p>
-							</div>
-						</div>
-						<div className="grid grid-cols-2 gap-4">
-							<Image
-								src={"/usflag.jpg"}
-								alt="US Flag"
-								height={400}
-								className="rounded-lg mb-4"
-								width={400}
-							/>
-							<div>
-								<h1 className="uppercase font-extrabold text-2xl mb-4">
-									How it works
-								</h1>
-								<p className=" mb-4">
-									{
-										"Simply select a topic and ask a question. Our app will provide you with an answer to your question using information collected regarding immigration policies in the United States of America."
-									}
-								</p>
-							</div>
-						</div>
+
+						<Button asChild>
+							<Link href="compass" noUnderline>
+								Get started{" "}
+								<ArrowRight className="w-4 h-4 ml-2" />
+							</Link>
+						</Button>
 					</div>
-					<div className=" ">
+
+					<div className="mt-8 ml-0 sm:ml-8 sm:mt-0">
 						<Image
 							src={"/immigrants.jpg"}
 							height={400}
 							width={400}
 							alt="App screenshot"
-							className="rounded-lg w-full mb-4"
+							className="w-full mb-4 rounded-lg"
 						/>
+
 						<div className="flex flex-row gap-4">
 							<Image
 								src={"/immigrants2.jpg"}
 								height={400}
 								width={400}
 								alt="App screenshot"
-								className="rounded-lg mb-4 object-cover"
+								className="object-cover w-1/2 mb-4 rounded-lg"
 							/>
+
 							<Image
 								src={"/immigrants3.webp"}
 								height={400}
 								width={400}
 								alt="App screenshot"
-								className="rounded-lg mb-4 object-cover"
+								className="object-cover w-1/2 mb-4 rounded-lg"
 							/>
 						</div>
 					</div>
+				</div>
+
+				<div className="flex flex-col gap-4 mt-4 sm:mt-8 sm:flex-row">
+					<Image
+						src={"/usflag.jpg"}
+						alt="US Flag"
+						height={400}
+						className="mb-4 rounded-lg max-h-40"
+						width={400}
+					/>
+					<div className="ml-0 sm:ml-6">
+						<h1 className="mb-4 text-2xl font-extrabold uppercase">
+							How it works
+						</h1>
+						<p className="mb-4 ">
+							{
+								"Simply select a topic and ask a question. Our app will provide you with an answer to your question using information collected regarding immigration policies in the United States of America."
+							}
+						</p>
+					</div>
+				</div>
+
+				<div className="grid grid-rows-4 gap-2 py-4 sm:grid-rows-2 sm:grid-cols-2">
+					<Link
+						href="/compass/health"
+						noUnderline
+						className="p-4 bg-red-500 rounded-lg text-background dark:text-foreground"
+					>
+						<p className="font-bold">HEALTH</p>
+						<p className="mt-1 text-sm ">
+							Answer questions about health insurance, medical
+							care, and more.
+						</p>
+					</Link>
+					<Link
+						href="/compass/jobs"
+						noUnderline
+						className="p-4 bg-green-500 rounded-lg dark:text-background text-foreground"
+					>
+						<p className="font-bold">JOBS</p>
+						<p className="mt-1 text-sm ">
+							Answer questions about employment, taxes, and more.
+						</p>
+					</Link>
+					<Link
+						href="/compass/housing"
+						noUnderline
+						className="p-4 bg-yellow-500 rounded-lg dark:text-background text-foreground"
+					>
+						<p className="font-bold">HOUSING</p>
+						<p className="mt-1 text-sm ">
+							Answer questions about housing, rent, and more.
+						</p>
+					</Link>
+					<Link
+						href="/compass/legal"
+						noUnderline
+						className="p-4 bg-purple-500 rounded-lg text-background dark:text-foreground"
+					>
+						<p className="font-bold">LEGAL</p>
+						<p className="mt-1 text-sm ">
+							Answer questions about legal status, citizenship,
+							and more.
+						</p>
+					</Link>
 				</div>
 			</Content>
 		</>
