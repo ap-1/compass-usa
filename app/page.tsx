@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
+import { descriptions } from "@/app/compass/page";
 import { Link } from "@/components/link";
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
@@ -88,10 +89,7 @@ export default function Home() {
 						className="p-4 bg-red-500 rounded-lg text-background dark:text-foreground"
 					>
 						<p className="font-bold">HEALTH</p>
-						<p className="mt-1 text-sm ">
-							Answer questions about health insurance, medical
-							care, and more.
-						</p>
+						<p className="mt-1 text-sm ">{descriptions.Health}</p>
 					</Link>
 					<Link
 						href="/compass/jobs"
@@ -99,9 +97,7 @@ export default function Home() {
 						className="p-4 bg-green-500 rounded-lg dark:text-background text-foreground"
 					>
 						<p className="font-bold">JOBS</p>
-						<p className="mt-1 text-sm ">
-							Answer questions about employment, taxes, and more.
-						</p>
+						<p className="mt-1 text-sm ">{descriptions.Jobs}</p>
 					</Link>
 					<Link
 						href="/compass/housing"
@@ -109,9 +105,7 @@ export default function Home() {
 						className="p-4 bg-yellow-500 rounded-lg dark:text-background text-foreground"
 					>
 						<p className="font-bold">HOUSING</p>
-						<p className="mt-1 text-sm ">
-							Answer questions about housing, rent, and more.
-						</p>
+						<p className="mt-1 text-sm ">{descriptions.Housing}</p>
 					</Link>
 					<Link
 						href="/compass/legal"
@@ -119,10 +113,7 @@ export default function Home() {
 						className="p-4 bg-purple-500 rounded-lg text-background dark:text-foreground"
 					>
 						<p className="font-bold">LEGAL</p>
-						<p className="mt-1 text-sm ">
-							Answer questions about legal status, citizenship,
-							and more.
-						</p>
+						<p className="mt-1 text-sm ">{descriptions.Legal}</p>
 					</Link>
 				</div>
 			</Content>

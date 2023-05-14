@@ -3,21 +3,14 @@
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import {
-	Compass,
-	Menu,
-	UserPlus,
-	Sun,
-	MoonStar,
-	X,
-	type LucideIcon,
-} from "lucide-react";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Compass, Menu, Sun, MoonStar, X, type LucideIcon } from "lucide-react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { Link } from "@/components/link";
 import { Button } from "@/components/ui/button";
+import { SignInButton } from "@/components/signIn";
 import { Search } from "@/components/navbar/search";
-import { pages } from "@/components/navbar/pages";
+import { pages, topicPages } from "@/components/navbar/pages";
 import { Content } from "@/components/content";
 import {
 	NavigationMenu,
@@ -27,16 +20,18 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-interface NavbarProps {
-	title: (typeof pages)[number]["title"];
+export interface NavbarProps {
+	title:
+		| (typeof pages)[number]["title"]
+		| (typeof topicPages)[number]["title"];
 }
 
 interface AdditionalProps {
-	className?: string;
-	title?: NavbarProps["title"];
+	className: string;
+	title: NavbarProps["title"];
 }
 
-const Auth = ({ className }: AdditionalProps) => {
+const Auth = ({ className, title }: AdditionalProps) => {
 	return (
 		<div className={className}>
 			<SignedIn>
@@ -51,12 +46,7 @@ const Auth = ({ className }: AdditionalProps) => {
 				</div>
 			</SignedIn>
 			<SignedOut>
-				<SignInButton mode="modal">
-					<Button className="flex flex-row gap-2">
-						Sign in
-						<UserPlus className="w-4 h-4" />
-					</Button>
-				</SignInButton>
+				<SignInButton title={title} />
 			</SignedOut>
 		</div>
 	);
@@ -89,7 +79,7 @@ const NavMenu = ({ className, title }: AdditionalProps) => {
 				</NavigationMenuItem>
 
 				<NavigationMenuItem>
-					<Auth className="block lg:hidden" />
+					<Auth className="block lg:hidden" title={title} />
 				</NavigationMenuItem>
 			</NavigationMenuList>
 		</NavigationMenu>
@@ -127,7 +117,10 @@ export const Navbar = ({ title }: NavbarProps) => {
 						</span>
 					</Link>
 
-					<NavMenu className="hidden my-auto lg:block" />
+					<NavMenu
+						className="hidden my-auto lg:block"
+						title={title}
+					/>
 				</div>
 
 				<div className="my-auto md:flex md:flex-row md:gap-x-2">
@@ -144,7 +137,7 @@ export const Navbar = ({ title }: NavbarProps) => {
 						/>
 					</Button>
 
-					<Auth className="hidden lg:block" />
+					<Auth className="hidden lg:block" title={title} />
 
 					<Button
 						variant="outline"
@@ -164,7 +157,10 @@ export const Navbar = ({ title }: NavbarProps) => {
 			</div>
 
 			{menuOpen && (
-				<NavMenu className="block w-full py-2 mb-4 -mt-2 border rounded-md lg:hidden md:-mt-1" />
+				<NavMenu
+					className="block w-full py-2 mb-4 -mt-2 border rounded-md lg:hidden md:-mt-1"
+					title={title}
+				/>
 			)}
 		</Content>
 	);

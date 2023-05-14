@@ -3,12 +3,13 @@
 import { useState, useRef, forwardRef, useEffect } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { notFound, useRouter } from "next/navigation";
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 import { Link } from "@/components/link";
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import { Button } from "@/components/ui/button";
+import { SignInButton } from "@/components/signIn";
 import { topics, icons, type Topic } from "@/app/compass/page";
 
 import {
@@ -178,7 +179,7 @@ export default function TopicHelper({ params }: TopicHelperParams) {
 
 	return (
 		<>
-			<Navbar title="Compass" />
+			<Navbar title={topic as Topic} />
 			<Content as="main" className="py-8">
 				<SignedIn>
 					<div className="flex flex-col items-start col-span-2">
@@ -327,12 +328,7 @@ export default function TopicHelper({ params }: TopicHelperParams) {
 						</div>
 
 						<div className="flex gap-4">
-							<SignInButton mode="modal">
-								<Button className="flex flex-row gap-2">
-									Sign in
-									<UserPlus className="w-4 h-4" />
-								</Button>
-							</SignInButton>
+							<SignInButton title={topic as Topic} />
 
 							<Button
 								onClick={() => router.back()}

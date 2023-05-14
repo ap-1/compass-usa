@@ -12,11 +12,17 @@ import {
 	ArrowRightSquare,
 	Search,
 	type LucideIcon,
+	Link,
 } from "lucide-react";
 
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import { Button } from "@/components/ui/button";
+import {
+	HoverCard,
+	HoverCardTrigger,
+	HoverCardContent,
+} from "@/components/ui/hover-card";
 
 export const topics = ["Jobs", "Housing", "Legal", "Health"] as const;
 export type Topic = (typeof topics)[number];
@@ -26,7 +32,14 @@ export const icons: Record<Topic, LucideIcon> = {
 	Jobs: DollarSign,
 	Housing: Hotel,
 	Legal: Briefcase,
-};
+} as const;
+
+export const descriptions: Record<Topic, string> = {
+	Health: "Answer questions about health insurance, medical care, and more.",
+	Jobs: "Answer questions about employment, taxes, and more.",
+	Housing: "Answer questions about housing, rent, and more.",
+	Legal: "Answer questions about legal status, citizenship, and more.",
+} as const;
 
 interface ArrowProps {
 	angle: number;
@@ -75,20 +88,38 @@ interface ItemButtonProps {
 }
 
 const ItemButton = ({ topic, setTopic }: ItemButtonProps) => {
-	const { text, Icon } = useMemo(
-		() => ({ Icon: icons[topic], text: topic.toUpperCase() }),
+	const { text, description, Icon } = useMemo(
+		() => ({
+			Icon: icons[topic],
+			description: descriptions[topic],
+			text: topic.toUpperCase(),
+		}),
 		[topic]
 	);
 
 	return (
-		<Button
-			variant="ghost"
-			onClick={() => setTopic(topic)}
-			className="p-2 mx-3 my-2 text-black transition-transform rounded-lg dark:text-white hover:scale-105 "
-		>
-			<Icon />
-			<span className="ml-2">{text}</span>
-		</Button>
+		<HoverCard>
+			<HoverCardTrigger asChild>
+				<Button
+					variant="ghost"
+					onClick={() => setTopic(topic)}
+					className="p-2 mx-3 my-2 text-black transition-transform rounded-lg dark:text-white hover:scale-105 "
+				>
+					<Icon />
+					<span className="ml-2">{text}</span>
+				</Button>
+			</HoverCardTrigger>
+
+			<HoverCardContent className="w-50">
+				<div className="flex flex-row gap-x-4">
+					<Icon className="w-10 h-10 my-auto" />
+					<div className="space-y-1">
+						<h4 className="text-sm font-semibold">{topic}</h4>
+						<p className="text-sm">{description}</p>
+					</div>
+				</div>
+			</HoverCardContent>
+		</HoverCard>
 	);
 };
 
