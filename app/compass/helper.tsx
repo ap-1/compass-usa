@@ -112,8 +112,10 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 	const send = async () => {
 		if (!topic) return;
 
-		setMessages([...messages, { sender: "user", text: input }]);
-
+		setMessages((prevMessages) => [
+			...prevMessages,
+			{ sender: "user", text: input },
+		]);
 		const context = `
 			You are a helpful, creative, clever, and very friendly AI assistant who works for the US Immigration Bureau, and the user is an immigrant who is seeking help in the topic of ${topic}.
 			Return an in-depth response to the immigrant's request. This is not a conversation - this is a simple response to a query: ${input}.
@@ -123,8 +125,8 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 		getData(context)
 			.then((data) => data.message)
 			.then((content) => {
-				setMessages([
-					...messages,
+				setMessages((prevMessages) => [
+					...prevMessages,
 					{
 						sender: "compass",
 						text: content.split("SOURCES:")[0],
@@ -211,7 +213,7 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 										className={`rounded-lg p-2 bg-gray-200 dark:bg-gray-800 ${
 											message.sender === "user"
 												? "ml-2"
-												: "mr-2"
+												: "mr-2 bg-blue-100 dark:bg-blue-800"
 										}`}
 									>
 										<p className="text-sm">
@@ -233,7 +235,7 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 
 							<button
 								onClick={send}
-								className="bg-blue-500 hover:bg-blue-700  text-primary font-bold dark:text-white  pl-3 pr-4 py-2 flex flex-row items-center duration-150"
+								className="bg-blue-500 hover:bg-blue-700 border-t-2 border-gray-300 dark:border-gray-800 text-primary font-bold dark:text-white  pl-3 pr-4 py-2 flex flex-row items-center duration-150"
 							>
 								<Send className="w-5 h-5 mr-2" /> SEND
 							</button>
