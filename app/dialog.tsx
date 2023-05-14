@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { askChatGPT } from "@/lib/openai";
+import { Loader2 } from "lucide-react";
 
 import {
 	Dialog,
@@ -17,12 +18,19 @@ import { Textarea } from "@/components/ui/textarea";
 
 export const AskDialog = () => {
 	const queryRef = useRef<HTMLTextAreaElement>(null);
+	const [submitting, setSubmitting] = useState(false);
 
-	const send = () => {
+	const send = (e: FormEvent) => {
+		e.preventDefault();
+
 		const query = queryRef.current?.value;
 		if (!query) return;
 
-		askChatGPT(query).then(console.log).catch(console.error);
+		setSubmitting(true);
+		askChatGPT(query)
+			.then(console.log)
+			.catch(console.error)
+			.finally(() => setSubmitting(false));
 	};
 
 	return (
@@ -51,7 +59,16 @@ export const AskDialog = () => {
 						/>
 					</div>
 
-					<Button type="submit">Send message</Button>
+					<Button type="submit" disabled={submitting}>
+						{submitting ? (
+							<>
+								<Loader2 className="mr-2 h-4 w-4" />
+								Sending...
+							</>
+						) : (
+							"Send message"
+						)}
+					</Button>
 				</form>
 			</DialogContent>
 		</Dialog>
