@@ -26,17 +26,17 @@ export async function POST(request: NextRequest) {
 	}
 
 	try {
-		const completion = await openai.createCompletion({
+		const completion = await openai.createChatCompletion({
 			model: "gpt-3.5-turbo",
-			prompt: parsed.data.prompt,
+			messages: [{ role: "user", content: parsed.data.prompt }],
 		});
 
-		NextResponse.json({
+		return NextResponse.json({
 			status: "success",
-			message: completion.data.choices[0].text,
+			message: completion.data.choices[0].message?.content,
 		});
 	} catch (e) {
-		NextResponse.json({
+		return NextResponse.json({
 			status: "error",
 			message: JSON.stringify(e),
 		});

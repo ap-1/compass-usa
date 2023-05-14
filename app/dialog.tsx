@@ -23,7 +23,7 @@ async function getData(prompt: string) {
 	});
 
 	if (!res.ok) {
-		console.error(await res.json())
+		console.error(await res.json());
 		throw new Error("Failed to fetch data");
 	}
 
@@ -41,7 +41,7 @@ export const AskDialog = () => {
 		if (!query) return;
 
 		getData(query)
-			.then(console.log)
+			.then((data) => alert(data.message))
 			.catch(console.error)
 			.finally(() => setSubmitting(false));
 	};
