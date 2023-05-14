@@ -77,7 +77,10 @@ export const Search = () => {
 			</Button>
 
 			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput placeholder="Type a command or search..." />
+				<CommandInput
+					autoFocus
+					placeholder="Type a command or search..."
+				/>
 				<CommandList>
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Pages">
