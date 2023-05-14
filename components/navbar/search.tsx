@@ -86,7 +86,7 @@ export const Search = () => {
 						{pages.map((page) => (
 							<CommandItem
 								key={page.title}
-								value={page.title}
+								value={page.href}
 								onSelect={handler(router.push)}
 							>
 								<page.Icon className="mr-2 h-4 w-4" />

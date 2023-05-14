@@ -1,8 +1,8 @@
 "use client";
 
 import { useRef, useState, type FormEvent } from "react";
-import { askChatGPT } from "@/lib/openai";
 import { Loader2 } from "lucide-react";
+import superjson from "superjson";
 
 import {
 	Dialog,
@@ -16,6 +16,20 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
+async function getData(prompt: string) {
+	const res = await fetch("/api/query", {
+		method: "POST",
+		body: superjson.stringify({ prompt }),
+	});
+
+	if (!res.ok) {
+		console.error(await res.json())
+		throw new Error("Failed to fetch data");
+	}
+
+	return res.json();
+}
+
 export const AskDialog = () => {
 	const queryRef = useRef<HTMLTextAreaElement>(null);
 	const [submitting, setSubmitting] = useState(false);
@@ -26,8 +40,7 @@ export const AskDialog = () => {
 		const query = queryRef.current?.value;
 		if (!query) return;
 
-		setSubmitting(true);
-		askChatGPT(query)
+		getData(query)
 			.then(console.log)
 			.catch(console.error)
 			.finally(() => setSubmitting(false));
