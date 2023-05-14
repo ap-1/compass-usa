@@ -1,4 +1,4 @@
-import { Home, Github } from "lucide-react";
+import { Home, Github, Compass } from "lucide-react";
 
 export const pages = [
 	{
@@ -6,6 +6,11 @@ export const pages = [
 		href: "/",
 		Icon: Home,
 	},
+	{
+		title: "Compass",
+		href: "/",
+		Icon: Compass,
+	}
 ] as const;
 
 export const links = [

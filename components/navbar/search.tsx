@@ -82,7 +82,7 @@ export const Search = () => {
 							<CommandItem
 								key={page.title}
 								value={page.href}
-								onSelect={handler((href) => router.push(href))}
+								onSelect={handler(router.push)}
 							>
 								<page.Icon className="mr-2 h-4 w-4" />
 								{page.title}
@@ -95,7 +95,7 @@ export const Search = () => {
 							<CommandItem
 								key={theme.name}
 								value={theme.value}
-								onSelect={handler((value) => setTheme(value))}
+								onSelect={handler(setTheme)}
 							>
 								<theme.Icon className="mr-2 h-4 w-4" />
 								{theme.name}
