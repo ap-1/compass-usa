@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, forwardRef } from "react";
 import { MousePointer2 } from "lucide-react";
 
 import { Navbar } from "@/components/navbar";
@@ -9,6 +9,21 @@ import { Content } from "@/components/content";
 interface ArrowProps {
 	angle: number;
 }
+
+const Arrow = forwardRef<HTMLDivElement, ArrowProps>(
+	({ angle }: ArrowProps, arrowRef) => {
+		return (
+			<div
+				ref={arrowRef}
+				className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 border-4 rounded-full border-white"
+				style={{ rotate: `${angle - 45}deg` }}
+			>
+				<MousePointer2 className="rotate-180" />
+			</div>
+		);
+	}
+);
+Arrow.displayName = "Arrow";
 
 export default function Compass() {
 	const [arrowAngle, setArrowAngle] = useState(0);
@@ -34,18 +49,6 @@ export default function Compass() {
 		return () => window.removeEventListener("mousemove", updateArrowAngle);
 	}, []);
 
-	const Arrow = ({ angle }: ArrowProps) => {
-		return (
-			<div
-				ref={arrowRef}
-				className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 border-4 rounded-full border-white"
-				style={{ rotate: `${angle - 45}deg` }}
-			>
-				<MousePointer2 className="rotate-180" />
-			</div>
-		);
-	}
-
 	return (
 		<>
 			<Navbar title="Compass" />
@@ -64,7 +67,7 @@ export default function Compass() {
 							LEGAL
 						</button>
 						<div className="relative rounded-full border-8 border-white h-60 w-60">
-							<Arrow angle={arrowAngle} />
+							<Arrow angle={arrowAngle} ref={arrowRef} />
 						</div>
 						<button className="mt-4 bg-white rounded-lg text-black p-2 ">
 							LEGAL
