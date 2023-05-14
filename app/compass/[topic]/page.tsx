@@ -166,7 +166,18 @@ export default function Topic({ params }: any) {
 
 				setLinks(content?.split("LINKS:")[1]?.split("\n"));
 			})
-			.catch(console.error)
+			.catch((e) => {
+				console.error(e);
+				setMessages((prevMessages) => [
+					...prevMessages,
+					{
+						sender: "compass",
+						text: "There was an error. This can happen when OpenAI's endpoints are overloaded. Please try again later.",
+					},
+				]);
+				setSources([]);
+				setLinks([]);
+			})
 			.finally(() => setLoading(false));
 	};
 
@@ -343,4 +354,4 @@ export default function Topic({ params }: any) {
 			</Content>
 		</>
 	);
-};
+}
