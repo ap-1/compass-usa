@@ -8,7 +8,7 @@ export const pages = [
 	},
 	{
 		title: "Compass",
-		href: "/",
+		href: "/compass",
 		Icon: Compass,
 	}
 ] as const;
