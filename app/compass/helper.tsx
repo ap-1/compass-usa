@@ -8,6 +8,7 @@ import {
 	type Dispatch,
 	type SetStateAction,
 } from "react";
+import { Button } from "@/components/ui/button";
 import { cva, type VariantProps } from "class-variance-authority";
 import { icons, type Topic } from "@/app/compass/page";
 
@@ -18,9 +19,9 @@ import {
 	ArrowLeft,
 	Link,
 	Album,
+	Loader2,
 } from "lucide-react";
 import superjson from "superjson";
-import { set } from "zod";
 
 interface ArrowProps {
 	angle: number;
@@ -87,6 +88,7 @@ async function getData(prompt: string) {
 }
 
 export const Helper = ({ topic, setTopic }: HelperProps) => {
+	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [sources, setSources] = useState([]);
 	const [links, setLinks] = useState([]);
@@ -129,6 +131,7 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 			Then, send a list of sources (IDENTIFIED BY 'SOURCES:') with links, and then send a list of links (IDENTIFIED BY 'LINKS:') for further assistance.
 		`;
 
+		setLoading(true);
 		getData(context)
 			.then((data) => data.message)
 			.then((content) => {
@@ -149,7 +152,8 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 
 				setLinks(content?.split("LINKS:")[1]?.split("\n"));
 			})
-			.catch(console.error);
+			.catch(console.error)
+			.finally(() => setLoading(false));
 	};
 
 	// function to clear all messages, sources and links
@@ -166,47 +170,43 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 					<Arrow angle={arrowAngle} ref={arrowRef} />
 				</div>
 
-				<div className="text-3xl font-extrabold text-center uppercase ">
-					<p>Welcome to the Compass. </p>
+				<div className="text-3xl font-bold text-center uppercase ">
+					<p className="font-black tracking-wider">
+						Welcome to the Compass.{" "}
+					</p>
 
 					<Text variant={topic}>
-						YOUR TOPIC:
-						<Icon className="w-8 h-8 mx-2" />
-						{topic}
+						YOUR TOPIC: {topic}
+						<Icon className="w-8 h-8 ml-2" />
 					</Text>
-				</div>
-
-				<div className="relative ml-auto">
-					<button
-						onClick={() => {
-							setTopic("" as Topic);
-						}}
-						className="flex flex-row items-center py-2 pl-3 pr-4 ml-4 font-bold text-black duration-150 border-2 rounded-lg border-border hover:bg-primary-dark dark:text-white"
-					>
-						<ArrowLeft className="w-5 h-5 mr-2" /> BACK
-					</button>
 				</div>
 			</div>
 
 			<div className="w-full overflow-hidden border-2 rounded-lg border-border">
 				<div className="flex items-center bg-gray-100 dark:bg-gray-900">
-					<button
-						onClick={() => clearAll()}
-						className="flex flex-row items-center py-1 pl-3 pr-4 m-2 mr-2 font-bold duration-150 bg-red-500 rounded-md hover:bg-red-700 text-primary"
+					<Button
+						onClick={clearAll}
+						variant="destructive"
+						className="flex flex-row items-center py-1 pl-3 pr-4 m-2 mr-2"
 					>
 						<Trash className="w-5 h-5 mr-2" /> Clear All
-					</button>
+					</Button>
 
-					<div className="relative flex flex-row items-center gap-2 mx-4 ml-auto">
-						<span className="flex w-3 h-3 bg-red-500 rounded-full"></span>
-						<span className="flex w-3 h-3 bg-red-500 rounded-full"></span>
-						<span className="flex w-3 h-3 bg-red-500 rounded-full"></span>
+					<div className="relative ml-auto mr-2">
+						<Button
+							onClick={() => {
+								setTopic("" as Topic);
+							}}
+							className="flex flex-row items-center py-2 pl-3 pr-4 ml-4"
+						>
+							<ArrowLeft className="w-5 h-5 mr-2" /> BACK
+						</Button>
 					</div>
 				</div>
 
 				<div className="grid w-full grid-cols-2">
 					<div className="flex flex-col w-full max-h-full h-96">
-						<div className="flex flex-col flex-grow px-4 py-2 bg-gradient-to-br from-white to-gray-50 dark:from-gray-950 dark:to-black overflow-auto border-t-2 border-border">
+						<div className="flex flex-col flex-grow px-4 py-2 overflow-auto border-t-2 bg-gradient-to-br from-white to-gray-50 dark:from-gray-950 dark:to-black border-border">
 							{messages.map((message, index) => (
 								<div
 									key={index}
@@ -240,12 +240,23 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 								className="flex-grow px-4 py-2 bg-gray-100 border-t-2 border-r-2 focus:outline-none border-border dark:bg-gray-900 dark:text-white text-primary"
 							/>
 
-							<button
+							<Button
 								onClick={send}
-								className="bg-blue-500 hover:bg-blue-700 border-t-2 border-gray-300 dark:border-gray-800 text-primary font-bold dark:text-white  pl-3 pr-4 py-2 flex flex-row items-center duration-150"
+								disabled={loading}
+								className="flex flex-row items-center py-2 pl-3 pr-4 border-t-2 rounded-none"
 							>
-								<Send className="w-5 h-5 mr-2" /> SEND
-							</button>
+								{loading ? (
+									<>
+										<Loader2 className="w-5 h-5 mr-2 animate-spin" />
+										Sending...
+									</>
+								) : (
+									<>
+										<Send className="w-5 h-5 mr-2" />
+										Send message
+									</>
+								)}
+							</Button>
 						</div>
 					</div>
 

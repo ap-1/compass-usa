@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Compass, Menu, Sun, MoonStar, X, type LucideIcon } from "lucide-react";
@@ -18,8 +19,13 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
+interface NavbarProps {
+	title: (typeof pages)[number]["title"];
+}
+
 interface AdditionalProps {
 	className?: string;
+	title?: NavbarProps["title"];
 }
 
 const Auth = ({ className }: AdditionalProps) => {
@@ -39,7 +45,7 @@ const Auth = ({ className }: AdditionalProps) => {
 	);
 };
 
-const NavMenu = ({ className }: AdditionalProps) => {
+const NavMenu = ({ className, title }: AdditionalProps) => {
 	return (
 		<NavigationMenu className={className}>
 			<NavigationMenuList className="flex justify-between px-2 lg:px-0">
@@ -53,7 +59,7 @@ const NavMenu = ({ className }: AdditionalProps) => {
 							passHref
 						>
 							<NavigationMenuLink
-								className={navigationMenuTriggerStyle()}
+								className={cn(navigationMenuTriggerStyle())}
 							>
 								{page.title}
 							</NavigationMenuLink>
@@ -68,10 +74,6 @@ const NavMenu = ({ className }: AdditionalProps) => {
 		</NavigationMenu>
 	);
 };
-
-interface NavbarProps {
-	title: (typeof pages)[number]["title"];
-}
 
 export const Navbar = ({ title }: NavbarProps) => {
 	const { theme, setTheme } = useTheme();
