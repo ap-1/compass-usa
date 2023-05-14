@@ -37,8 +37,11 @@ export const Search = () => {
 	useEffect(() => {
 		const down = (e: KeyboardEvent) => {
 			e.preventDefault();
+
 			if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
 				setOpen((open) => !open);
+			} else if (["Esc", "Escape"].includes(e.key)) {
+				setOpen(false);
 			}
 		};
 
