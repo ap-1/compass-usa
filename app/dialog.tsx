@@ -40,14 +40,16 @@ export const AskDialog = () => {
 					</DialogDescription>
 				</DialogHeader>
 
-				<form className="grid w-full gap-1.5" onSubmit={send}>
-					<Label htmlFor="query">Your Query</Label>
-					<Textarea
-						ref={queryRef}
-						placeholder="Write a question here."
-						id="query"
-						required
-					/>
+				<form className="grid w-full gap-2" onSubmit={send}>
+					<div className="flex flex-col gap-1.5">
+						<Label htmlFor="query">Your Query</Label>
+						<Textarea
+							ref={queryRef}
+							placeholder="Write a question here."
+							id="query"
+							required
+						/>
+					</div>
 
 					<Button type="submit">Send message</Button>
 				</form>
