@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Activity, DollarSign, Home, Briefcase } from "lucide-react";
+import {
+	Activity,
+	DollarSign,
+	Home,
+	Briefcase,
+	type LucideIcon,
+} from "lucide-react";
 
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
@@ -10,7 +16,7 @@ import { Helper } from "@/app/compass/helper";
 
 export type Topic = "Health" | "Jobs" | "Legal" | "Housing";
 
-export const icons = {
+export const icons: Record<Topic, LucideIcon> = {
 	Health: Activity,
 	Jobs: DollarSign,
 	Housing: Home,
