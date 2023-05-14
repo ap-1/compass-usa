@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import { Link } from "@/components/link";
 import { Content } from "@/components/content";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,13 +16,23 @@ interface UserCardProps {
 }
 
 const UserCard = ({ name, username, description }: UserCardProps) => {
-	const url = `https://github.com/${username}`;
-	const avatarUrl = `${url}.png`;
+	const { url, avatarUrl } = useMemo(() => {
+		const url = `https://github.com/${username}`;
 
-	const initials = name
-		.split(" ")
-		.map((n) => n[0].toUpperCase())
-		.join("");
+		return {
+			url,
+			avatarUrl: `${url}.png`,
+		};
+	}, [username]);
+
+	const initials = useMemo(
+		() =>
+			name
+				.split(" ")
+				.map((n) => n[0].toUpperCase())
+				.join(""),
+		[name]
+	);
 
 	return (
 		<HoverCard>
