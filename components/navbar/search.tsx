@@ -164,7 +164,7 @@ export const Search = () => {
 						{links.map((link) => (
 							<CommandItem
 								key={link.title}
-								value={link.title}
+								value={link.href}
 								onSelect={handler((href) =>
 									window.open(href, "_blank")
 								)}
