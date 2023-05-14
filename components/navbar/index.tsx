@@ -25,7 +25,7 @@ const NavMenu = ({ className }: NavMenuProps) => {
 	return (
 		<NavigationMenu className={className}>
 			<NavigationMenuList className="flex justify-start pl-2 lg:pl-0">
-				<NavigationMenuItem>
+				<NavigationMenuItem className="flex flex-row gap-2">
 					{pages.map((page) => (
 						<Link
 							key={page.title}
@@ -67,11 +67,11 @@ export const Navbar = ({ title }: NavbarProps) => {
 			<div className="flex justify-between">
 				<div className="flex flex-row gap-x-8">
 					<Link
-						className="font-bold text-2xl py-4 flex flex-row gap-x-4"
+						className="group font-bold text-2xl transition-all py-4 flex flex-row gap-x-4 hover:tracking-wider hover:gap-x-5"
 						noUnderline
 						href="/"
 					>
-						<Compass className="h-8 w-8" />
+						<Compass className="h-8 w-8 group-hover:animate-spin" />
 						Compass USA
 					</Link>
 
