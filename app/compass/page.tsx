@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { type NextPage } from "next";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo, useRef, forwardRef } from "react";
 import { MousePointer2, ArrowRightSquare, Search } from "lucide-react";
@@ -98,7 +97,7 @@ const ItemButton = ({ topic, setTopic }: ItemButtonProps) => {
 	);
 };
 
-export const Compass: NextPage = () => {
+export default function Compass() {
 	const router = useRouter();
 	const [arrowAngle, setArrowAngle] = useState(0);
 	const arrowRef = useRef<HTMLDivElement>(null!);
@@ -233,5 +232,3 @@ export const Compass: NextPage = () => {
 		</>
 	);
 };
-
-export default Compass;

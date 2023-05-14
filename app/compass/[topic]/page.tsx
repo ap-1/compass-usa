@@ -4,7 +4,6 @@ import { useState, useRef, forwardRef, useEffect } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { notFound, useRouter } from "next/navigation";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { type NextPage } from "next";
 
 import { Link } from "@/components/link";
 import { Navbar } from "@/components/navbar";
@@ -85,13 +84,13 @@ async function getData(prompt: string) {
 	return res.json();
 }
 
-interface TopicHelperParams {
-	params: {
-		topic: Topic;
-	};
-}
+// interface TopicHelperParams {
+// 	params: {
+// 		topic: Topic;
+// 	};
+// }
 
-const Topic: NextPage<TopicHelperParams> = ({ params }) => {
+export default function Topic({ params }: any) {
 	const topic =
 		params.topic.charAt(0).toUpperCase() +
 		params.topic.slice(1).toLowerCase();
@@ -345,5 +344,3 @@ const Topic: NextPage<TopicHelperParams> = ({ params }) => {
 		</>
 	);
 };
-
-export default Topic;
