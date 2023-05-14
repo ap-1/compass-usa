@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useRef, forwardRef, useEffect } from "react";
+import {
+	useState,
+	useRef,
+	forwardRef,
+	useEffect,
+	type Dispatch,
+	type SetStateAction,
+} from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { icons, type Topic } from "@/app/compass/page";
 
@@ -24,7 +31,7 @@ const Arrow = forwardRef<HTMLDivElement, ArrowProps>(
 		return (
 			<div
 				ref={arrowRef}
-				className="absolute w-2 h-2 border-4 rounded-full border-white"
+				className="absolute w-2 h-2 border-4 border-white rounded-full"
 				style={{ rotate: `${angle - 45}deg` }}
 			>
 				<MousePointer2 className="rotate-180" />
@@ -57,7 +64,7 @@ const Text = ({ variant, ...rest }: TextProps) => (
 
 interface HelperProps {
 	topic: Topic;
-	setTopic: (arg0: string) => void;
+	setTopic: Dispatch<SetStateAction<Topic>>;
 }
 
 type Message = {
@@ -152,12 +159,12 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 
 	return (
 		<div className="flex flex-col items-start col-span-2">
-			<div className="mb-8 flex flex-row w-full items-center">
+			<div className="flex flex-row items-center w-full mb-8">
 				<div className="flex justify-center items-center relative rounded-full border-4 mr-4 border-gray-900 dark:bg-blue-600 bg-blue-500 dark:border-white h-20 w-20 bg-[url(/tickmarks.png)] bg-contain bg-center">
 					<Arrow angle={arrowAngle} ref={arrowRef} />
 				</div>
 
-				<div className=" text-3xl font-extrabold uppercase text-center ">
+				<div className="text-3xl font-extrabold text-center uppercase ">
 					<p>Welcome to the Compass. </p>
 
 					<Text variant={topic}>
@@ -170,34 +177,34 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 				<div className="relative ml-auto">
 					<button
 						onClick={() => {
-							setTopic("");
+							setTopic("" as Topic);
 						}}
-						className="border-primary border-2 border-gray-800 rounded-lg hover:bg-primary-dark text-black dark:text-white font-bold   pl-3 pr-4 py-2 flex flex-row items-center duration-150 ml-4"
+						className="flex flex-row items-center py-2 pl-3 pr-4 ml-4 font-bold text-black duration-150 border-2 rounded-lg border-border hover:bg-primary-dark dark:text-white"
 					>
 						<ArrowLeft className="w-5 h-5 mr-2" /> BACK
 					</button>
 				</div>
 			</div>
 
-			<div className="border-2 border-gray-300 dark:border-gray-800 rounded-lg overflow-hidden w-full">
+			<div className="w-full overflow-hidden border-2 rounded-lg border-border">
 				<div className="flex items-center bg-gray-100 dark:bg-gray-900">
 					<button
 						onClick={() => clearAll()}
-						className="m-2 bg-red-500 hover:bg-red-700 text-primary font-bold rounded-md pl-3 pr-4 py-1 flex flex-row items-center duration-150 mr-2"
+						className="flex flex-row items-center py-1 pl-3 pr-4 m-2 mr-2 font-bold duration-150 bg-red-500 rounded-md hover:bg-red-700 text-primary"
 					>
 						<Trash className="w-5 h-5 mr-2" /> Clear All
 					</button>
 
-					<div className="flex flex-row items-center gap-2 ml-auto relative mx-4">
+					<div className="relative flex flex-row items-center gap-2 mx-4 ml-auto">
 						<span className="flex w-3 h-3 bg-red-500 rounded-full"></span>
 						<span className="flex w-3 h-3 bg-red-500 rounded-full"></span>
 						<span className="flex w-3 h-3 bg-red-500 rounded-full"></span>
 					</div>
 				</div>
 
-				<div className="grid grid-cols-2 w-full">
-					<div className="flex flex-col w-full h-96 max-h-full">
-						<div className="flex flex-col flex-grow border-t-2 border-gray-300 dark:border-gray-800   overflow-auto px-4 py-2">
+				<div className="grid w-full grid-cols-2">
+					<div className="flex flex-col w-full max-h-full h-96">
+						<div className="flex flex-col flex-grow px-4 py-2 overflow-auto border-t-2 border-border">
 							{messages.map((message, index) => (
 								<div
 									key={index}
@@ -228,37 +235,39 @@ export const Helper = ({ topic, setTopic }: HelperProps) => {
 								placeholder="Type your question here"
 								value={input}
 								onChange={(e) => setInput(e.target.value)}
-								className="flex-grow focus:outline-none border-t-2 border-r-2 border-gray-300 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 dark:text-white text-primary px-4 py-2"
+								className="flex-grow px-4 py-2 bg-gray-100 border-t-2 border-r-2 focus:outline-none border-border dark:bg-gray-900 dark:text-white text-primary"
 							/>
 
 							<button
 								onClick={send}
-								className="bg-blue-500 hover:bg-blue-700  text-primary font-bold dark:text-white  pl-3 pr-4 py-2 flex flex-row items-center duration-150"
+								className="flex flex-row items-center py-2 pl-3 pr-4 font-bold duration-150 bg-blue-500 hover:bg-blue-700 text-primary dark:text-white"
 							>
 								<Send className="w-5 h-5 mr-2" /> SEND
 							</button>
 						</div>
 					</div>
 
-					<div className="flex flex-col w-full h-96 max-h-full">
-						<div className="flex flex-col flex-grow border-l-2 border-t-2 border-gray-300 dark:border-gray-800 overflow-auto px-4 py-2">
-							<p className="text-lg font-bold flex items-center">
-								<Link className="h-4 w-4 inline mr-2 " />{" "}
+					<div className="flex flex-col w-full max-h-full h-96">
+						<div className="flex flex-col flex-grow px-4 py-2 overflow-auto border-t-2 border-l-2 border-border">
+							<p className="flex items-center text-lg font-bold">
+								<Link className="inline w-4 h-4 mr-2 " />{" "}
 								SOURCES
 							</p>
+
 							{sources.map((source, index) => (
-								<div key={index} className="">
+								<div key={index}>
 									<p className="text-sm">{source} </p>
 								</div>
 							))}
 						</div>
 
-						<div className="flex flex-col flex-grow border-l-2 border-t-2 border-gray-300 dark:border-gray-800 overflow-auto px-4 py-2">
-							<p className="text-lg font-bold flex items-center">
-								<Album className="h-4 w-4 inline mr-2 " /> Links
+						<div className="flex flex-col flex-grow px-4 py-2 overflow-auto border-t-2 border-l-2 border-border">
+							<p className="flex items-center text-lg font-bold">
+								<Album className="inline w-4 h-4 mr-2 " /> Links
 							</p>
+
 							{links.map((link, index) => (
-								<div key={index} className="">
+								<div key={index}>
 									<p className="text-sm">{link}</p>
 								</div>
 							))}

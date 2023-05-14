@@ -29,7 +29,7 @@ export default function Compass() {
 	return (
 		<>
 			<Navbar title="Compass" />
-			<Content as="main" className="py-20 grid grid-cols-2">
+			<Content as="main" className="grid grid-cols-2 py-20">
 				{topic ? (
 					<Helper topic={topic} setTopic={setTopic} />
 				) : (

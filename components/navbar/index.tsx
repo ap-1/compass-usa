@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Compass, Menu, Sun, MoonStar, X, type LucideIcon } from "lucide-react";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import { Link } from "@/components/link";
 import { Button } from "@/components/ui/button";
@@ -17,14 +18,31 @@ import {
 	navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
-interface NavMenuProps {
+interface AdditionalProps {
 	className?: string;
 }
 
-const NavMenu = ({ className }: NavMenuProps) => {
+const Auth = ({ className }: AdditionalProps) => {
+	return (
+		<div className={className}>
+			<SignedIn>
+				<div className="pt-0 lg:pt-1 pr-1 lg:pr-0">
+					<UserButton />
+				</div>
+			</SignedIn>
+			<SignedOut>
+				<Button>
+					<SignInButton />
+				</Button>
+			</SignedOut>
+		</div>
+	);
+};
+
+const NavMenu = ({ className }: AdditionalProps) => {
 	return (
 		<NavigationMenu className={className}>
-			<NavigationMenuList className="flex justify-start pl-2 lg:pl-0">
+			<NavigationMenuList className="flex justify-between px-2 lg:px-0">
 				<NavigationMenuItem className="flex flex-row gap-2">
 					{pages.map((page) => (
 						<Link
@@ -41,6 +59,10 @@ const NavMenu = ({ className }: NavMenuProps) => {
 							</NavigationMenuLink>
 						</Link>
 					))}
+				</NavigationMenuItem>
+
+				<NavigationMenuItem>
+					<Auth className="block lg:hidden" />
 				</NavigationMenuItem>
 			</NavigationMenuList>
 		</NavigationMenu>
@@ -91,6 +113,8 @@ export const Navbar = ({ title }: NavbarProps) => {
 							}
 						/>
 					</Button>
+
+					<Auth className="hidden lg:block" />
 
 					<Button
 						variant="outline"
