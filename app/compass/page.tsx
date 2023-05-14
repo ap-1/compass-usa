@@ -177,21 +177,32 @@ export default function Compass() {
 				<div className="flex flex-col lg:flex-row">
 					<div className="flex flex-col items-start">
 						<p className="mb-4 text-3xl font-extrabold text-center uppercase">
-							Welcome to the Compass.
+							Welcome to Compass.
 						</p>
 						<p>
 							{
-								"We know that it can be hard to find the right resources when you're in need. That's why we've created the Compass, a tool to help you find what you need."
+								"We know that it can be hard to find the right resources when you're in need. That's why we've created the Compass USA, a tool to help you find what you're looking for."
 							}
 						</p>
 
-						<div className="flex flex-row items-center justify-center mt-4">
-							<ArrowRightSquare className="inline-block w-12 h-12 mr-4 " />
-							<p className="font-semibold">
-								{
-									"To get started, click on one of the categories to the right. You'll be presented with a list of resources that can help you."
-								}
-							</p>
+						<div className="flex flex-col mt-4">
+							<div className="flex flex-row text-xl font-semibold">
+								<ArrowRightSquare className="my-auto w-6 h-6 mr-4 " />
+								Getting started
+							</div>
+
+							<div className="mt-1 mb-2 text-sm">
+								<p className="hidden lg:inline-block">
+									{
+										"To get started, click on one of the categories on the right. You'll be presented with a list of resources that can help you."
+									}
+								</p>
+								<p className="inline-block lg:hidden">
+									{
+										"To get started, click on one of the categories below. You'll be presented with a list of resources that can help you."
+									}
+								</p>
+							</div>
 						</div>
 
 						<div className="flex flex-col items-center mt-4 sm:flex-row ">
@@ -212,7 +223,7 @@ export default function Compass() {
 								<div className="mt-2 ">
 									<p className="text-sm">
 										{
-											"Technology is invaluable in today's world. We can help you find the right resources to help you with any health, employment, legal, or housing needs you may have."
+											"Information is invaluable in today's world. We can help you find the right resources to help you with any health, employment, legal, or housing needs you may have."
 										}
 									</p>
 								</div>

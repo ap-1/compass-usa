@@ -21,7 +21,7 @@ export default function Home() {
 						</h1>
 						<p className="mb-4 ">
 							{
-								"Our app uses ChatGPT to provide accurate and reliable answers to a wide range of immigration-related questions. Whether you're looking for information about visas, work permits, or citizenship, we've got you covered."
+								"Our platform uses text-based generative AI to provide accurate and reliable answers to a wide range of immigration-related questions. Whether you're looking for information about visas, work permits, or citizenship, we've got you covered."
 							}
 						</p>
 
@@ -76,7 +76,7 @@ export default function Home() {
 						</h1>
 						<p className="mb-4 ">
 							{
-								"Simply select a topic and ask a question. Our app will provide you with an answer to your question using information collected regarding immigration policies in the United States of America."
+								"Simply select a topic and ask a question. Our app will provide you with an answer to your question using information collected regarding immigration policies in the United States of America. Links and sources are also provided."
 							}
 						</p>
 					</div>
