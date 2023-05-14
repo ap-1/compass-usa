@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { SignedIn, SignedOut, useClerk } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,13 @@ import {
 	CommandItem,
 	CommandList,
 } from "@/components/ui/command";
-import { Sun, MoonStar, Search as SearchIcon } from "lucide-react";
+import {
+	Sun,
+	MoonStar,
+	UserPlus,
+	UserMinus,
+	Search as SearchIcon,
+} from "lucide-react";
 
 const themes = [
 	{
@@ -32,6 +39,7 @@ const themes = [
 export const Search = () => {
 	const [open, setOpen] = useState(false);
 	const { setTheme } = useTheme();
+	const { signOut, openSignIn } = useClerk();
 	const router = useRouter();
 
 	useEffect(() => {
@@ -50,8 +58,8 @@ export const Search = () => {
 
 	const handler = (func: (arg0: string) => void) => {
 		return (value: string) => {
-			func(value);
 			setOpen(false);
+			func(value);
 		};
 	};
 
@@ -119,6 +127,27 @@ export const Search = () => {
 								{theme.name}
 							</CommandItem>
 						))}
+					</CommandGroup>
+
+					<CommandGroup heading="Utility">
+						<SignedIn>
+							<CommandItem
+								value="signOut"
+								onSelect={handler(() => signOut())}
+							>
+								<UserMinus className="w-4 h-4 mr-2" />
+								Sign out
+							</CommandItem>
+						</SignedIn>
+						<SignedOut>
+							<CommandItem
+								value="signIn"
+								onSelect={handler(() => openSignIn())}
+							>
+								<UserPlus className="w-4 h-4 mr-2" />
+								Sign in
+							</CommandItem>
+						</SignedOut>
 					</CommandGroup>
 
 					<CommandGroup heading="Links">

@@ -327,10 +327,12 @@ export default function TopicHelper({ params }: TopicHelperParams) {
 						</div>
 
 						<div className="flex gap-4">
-							<Button className="flex flex-row gap-2">
-								<SignInButton mode="modal" />
-								<UserPlus className="w-4 h-4" />
-							</Button>
+							<SignInButton mode="modal">
+								<Button className="flex flex-row gap-2">
+									Sign in
+									<UserPlus className="w-4 h-4" />
+								</Button>
+							</SignInButton>
 
 							<Button
 								onClick={() => router.back()}
