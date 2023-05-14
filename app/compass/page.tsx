@@ -31,7 +31,7 @@ export default function Compass() {
 			<Navbar title="Compass" />
 			<Content as="main" className="py-20 grid grid-cols-2">
 				{topic ? (
-					<Helper topic={topic} />
+					<Helper topic={topic} setTopic={setTopic} />
 				) : (
 					<Selector setTopic={setTopic} />
 				)}

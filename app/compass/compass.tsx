@@ -13,11 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { icons, type Topic } from "@/app/compass/page";
-import {
-	MousePointer2,
-	ArrowRightSquare,
-	Search,
-} from "lucide-react";
+import { MousePointer2, ArrowRightSquare, Search } from "lucide-react";
 
 interface ArrowProps {
 	angle: number;
@@ -53,10 +49,10 @@ const ItemButton = ({ topic, setTopic }: ItemButtonProps) => {
 		<Button
 			variant="ghost"
 			onClick={() => setTopic(topic)}
-			className="mt-4 rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform "
+			className="my-2 mx-3 rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform "
 		>
 			<Icon />
-			{text}
+			<span className="ml-2">{text}</span>
 		</Button>
 	);
 };
