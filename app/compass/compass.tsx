@@ -1,15 +1,23 @@
 "use client";
-import { useState, useEffect, useRef, forwardRef } from "react";
+
+import Image from "next/image";
+import {
+	useState,
+	useEffect,
+	useMemo,
+	useRef,
+	forwardRef,
+	type Dispatch,
+	type SetStateAction,
+} from "react";
+
+import { Button } from "@/components/ui/button";
+import { icons, type Topic } from "@/app/compass/page";
 import {
 	MousePointer2,
-	DollarSign,
-	Home,
-	Briefcase,
-	Activity,
 	ArrowRightSquare,
 	Search,
 } from "lucide-react";
-import Image from "next/image";
 
 interface ArrowProps {
 	angle: number;
@@ -30,7 +38,34 @@ const Arrow = forwardRef<HTMLDivElement, ArrowProps>(
 );
 Arrow.displayName = "Arrow";
 
-export default function CompassSelector(props: { setTopic: any }) {
+interface ItemButtonProps {
+	topic: Topic;
+	setTopic: Dispatch<SetStateAction<Topic>>;
+}
+
+const ItemButton = ({ topic, setTopic }: ItemButtonProps) => {
+	const { text, Icon } = useMemo(
+		() => ({ Icon: icons[topic], text: topic.toUpperCase() }),
+		[topic]
+	);
+
+	return (
+		<Button
+			variant="ghost"
+			onClick={() => setTopic(topic)}
+			className="mt-4 rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform "
+		>
+			<Icon />
+			{text}
+		</Button>
+	);
+};
+
+interface SelectorProps {
+	setTopic: Dispatch<SetStateAction<Topic>>;
+}
+
+export const Selector = ({ setTopic }: SelectorProps) => {
 	const [arrowAngle, setArrowAngle] = useState(0);
 	const arrowRef = useRef<HTMLDivElement>(null!);
 
@@ -65,6 +100,7 @@ export default function CompassSelector(props: { setTopic: any }) {
 						"We know that it can be hard to find the right resources when you're in need. That's why we've created the Compass, a tool to help you find what you need."
 					}
 				</p>
+
 				<div className="flex flex-row mt-4 justify-center items-center">
 					<ArrowRightSquare className="inline-block h-12 w-12 mr-2 " />
 					<p className="font-semibold">
@@ -73,6 +109,7 @@ export default function CompassSelector(props: { setTopic: any }) {
 						}
 					</p>
 				</div>
+
 				<div className="flex-row flex mt-4 items-center ">
 					<Image
 						src="/computers.png"
@@ -81,6 +118,7 @@ export default function CompassSelector(props: { setTopic: any }) {
 						height={400}
 						width={400}
 					/>
+
 					<div className="ml-4  ">
 						<div className="text-xl font-semibold flex flex-row items-center">
 							<Search className=" h-6 w-6 mr-4 " />
@@ -97,44 +135,26 @@ export default function CompassSelector(props: { setTopic: any }) {
 					</div>
 				</div>
 			</div>
+
 			<div className="flex flex-row justify-center w-full">
 				<div className="flex  items-center">
-					<button
-						onClick={() => props.setTopic("Health")}
-						className="mr-4 rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform "
-					>
-						<Activity className="" /> HEALTH
-					</button>
+					<ItemButton topic="Health" setTopic={setTopic} />
 				</div>
+
 				<div className="flex flex-col justify-center items-center ">
-					<button
-						onClick={() => props.setTopic("Jobs")}
-						className="mb-4 rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform "
-					>
-						<DollarSign className="" />
-						JOBS
-					</button>
+					<ItemButton topic="Jobs" setTopic={setTopic} />
+
 					<div className="relative rounded-full border-8 border-black dark:bg-blue-600 bg-blue-500 dark:border-white h-60 w-60 bg-[url(/tickmarks.png)] bg-contain bg-center">
 						<Arrow angle={arrowAngle} ref={arrowRef} />
 					</div>
-					<button
-						onClick={() => props.setTopic("Legal")}
-						className="mt-4  rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform "
-					>
-						<Briefcase className="" />
-						LEGAL
-					</button>
+
+					<ItemButton topic="Legal" setTopic={setTopic} />
 				</div>
+
 				<div className="flex  items-center">
-					<button
-						onClick={() => props.setTopic("Housing")}
-						className="ml-4 rounded-lg text-black dark:text-white p-2 hover:scale-105 transition-transform"
-					>
-						<Home className="" />
-						HOUSING
-					</button>
+					<ItemButton topic="Housing" setTopic={setTopic} />
 				</div>
 			</div>
 		</>
 	);
-}
+};
