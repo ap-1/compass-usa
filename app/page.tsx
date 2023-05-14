@@ -1,15 +1,69 @@
 "use client";
 
 import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { type NextPage } from "next";
 
-import { descriptions } from "@/app/compass/page";
 import { Link } from "@/components/link";
 import { Navbar } from "@/components/navbar";
+import {
+	descriptions,
+	icons,
+	topicPages,
+	type Topic,
+} from "@/components/navbar/pages";
 import { Content } from "@/components/content";
 import { Button } from "@/components/ui/button";
 
-export default function Home() {
+const bgVariants = cva("flex flex-row items-center", {
+	variants: {
+		topic: {
+			Health: "hover:bg-red-500 dark:hover:text-foreground hover:text-background",
+			Jobs: "hover:bg-green-500 dark:hover:text-background hover:text-foreground",
+			Housing:
+				"hover:bg-yellow-500 dark:hover:text-background hover:text-foreground",
+			Legal: "hover:bg-purple-500 dark:hover:text-foreground hover:text-background",
+		},
+	},
+});
+
+interface TopicButtonProps {
+	topic: Topic;
+}
+
+const TopicButton = ({ topic }: TopicButtonProps) => {
+	const { name, href, description, Icon } = useMemo(
+		() => ({
+			href: topicPages.find((page) => page.title === topic)?.href!,
+			description: descriptions[topic],
+			name: topic.toUpperCase(),
+			Icon: icons[topic],
+		}),
+		[topic]
+	);
+
+	return (
+		<Link href={href} noUnderline legacyBehavior passHref>
+			<Button
+				variant="outline"
+				className={cn("h-16", bgVariants({ topic }))}
+			>
+				<div className="flex flex-row gap-2 mr-auto">
+					<Icon className="w-10 h-10 my-auto" />
+					<div className="flex flex-col items-start gap-1 my-auto">
+						<p>{topic}</p>
+						<p>{description}</p>
+					</div>
+				</div>
+			</Button>
+		</Link>
+	);
+};
+
+const Home: NextPage = () => {
 	return (
 		<>
 			<Navbar title="Home" />
@@ -83,7 +137,7 @@ export default function Home() {
 				</div>
 
 				<div className="grid grid-rows-4 gap-2 py-4 sm:grid-rows-2 sm:grid-cols-2">
-					<Link
+					{/* <Link
 						href="/compass/health"
 						noUnderline
 						className="p-4 bg-red-500 rounded-lg text-background dark:text-foreground"
@@ -114,9 +168,15 @@ export default function Home() {
 					>
 						<p className="font-bold">LEGAL</p>
 						<p className="mt-1 text-sm ">{descriptions.Legal}</p>
-					</Link>
+					</Link> */}
+					<TopicButton topic="Health" />
+					<TopicButton topic="Jobs" />
+					<TopicButton topic="Housing" />
+					<TopicButton topic="Legal" />
 				</div>
 			</Content>
 		</>
 	);
-}
+};
+
+export default Home;

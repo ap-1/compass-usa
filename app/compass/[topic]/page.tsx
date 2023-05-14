@@ -4,20 +4,20 @@ import { useState, useRef, forwardRef, useEffect } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { notFound, useRouter } from "next/navigation";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { type NextPage } from "next";
 
 import { Link } from "@/components/link";
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import { Button } from "@/components/ui/button";
 import { SignInButton } from "@/components/signIn";
-import { topics, icons, type Topic } from "@/app/compass/page";
+import { topics, icons, type Topic } from "@/components/navbar/pages";
 
 import {
 	Send,
 	Trash,
 	MousePointer2,
 	ArrowLeft,
-	UserPlus,
 	Home,
 	Link as LinkIcon,
 	History,
@@ -91,7 +91,7 @@ interface TopicHelperParams {
 	};
 }
 
-export default function TopicHelper({ params }: TopicHelperParams) {
+const Topic: NextPage<TopicHelperParams> = ({ params }) => {
 	const topic =
 		params.topic.charAt(0).toUpperCase() +
 		params.topic.slice(1).toLowerCase();
@@ -344,4 +344,6 @@ export default function TopicHelper({ params }: TopicHelperParams) {
 			</Content>
 		</>
 	);
-}
+};
+
+export default Topic;

@@ -1,45 +1,20 @@
 "use client";
 
 import Image from "next/image";
+import { type NextPage } from "next";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useMemo, useRef, forwardRef } from "react";
-import {
-	Activity,
-	DollarSign,
-	Hotel,
-	Briefcase,
-	MousePointer2,
-	ArrowRightSquare,
-	Search,
-	type LucideIcon,
-	Link,
-} from "lucide-react";
+import { MousePointer2, ArrowRightSquare, Search } from "lucide-react";
 
 import { Navbar } from "@/components/navbar";
 import { Content } from "@/components/content";
 import { Button } from "@/components/ui/button";
+import { Topic, descriptions, icons, topics } from "@/components/navbar/pages";
 import {
 	HoverCard,
 	HoverCardTrigger,
 	HoverCardContent,
 } from "@/components/ui/hover-card";
-
-export const topics = ["Jobs", "Housing", "Legal", "Health"] as const;
-export type Topic = (typeof topics)[number];
-
-export const icons: Record<Topic, LucideIcon> = {
-	Health: Activity,
-	Jobs: DollarSign,
-	Housing: Hotel,
-	Legal: Briefcase,
-} as const;
-
-export const descriptions: Record<Topic, string> = {
-	Health: "Answer questions about health insurance, medical care, and more.",
-	Jobs: "Answer questions about employment, taxes, and more.",
-	Housing: "Answer questions about housing, rent, and more.",
-	Legal: "Answer questions about legal status, citizenship, and more.",
-} as const;
 
 interface ArrowProps {
 	angle: number;
@@ -123,7 +98,7 @@ const ItemButton = ({ topic, setTopic }: ItemButtonProps) => {
 	);
 };
 
-export default function Compass() {
+export const Compass: NextPage = () => {
 	const router = useRouter();
 	const [arrowAngle, setArrowAngle] = useState(0);
 	const arrowRef = useRef<HTMLDivElement>(null!);
@@ -187,7 +162,7 @@ export default function Compass() {
 
 						<div className="flex flex-col mt-4">
 							<div className="flex flex-row text-xl font-semibold">
-								<ArrowRightSquare className="my-auto w-6 h-6 mr-4 " />
+								<ArrowRightSquare className="w-6 h-6 my-auto mr-4 " />
 								Getting started
 							</div>
 
@@ -257,4 +232,6 @@ export default function Compass() {
 			</Content>
 		</>
 	);
-}
+};
+
+export default Compass;
