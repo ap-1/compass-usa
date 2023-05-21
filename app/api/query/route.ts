@@ -6,7 +6,7 @@ import { Configuration, OpenAIApi } from "openai";
 import { NextRequest, NextResponse } from "next/server";
 
 const configuration = new Configuration({
-	apiKey: env.OPENAI_API_KEY,
+	apiKey: env.NEXT_PUBLIC_OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
@@ -26,14 +26,19 @@ export async function POST(request: NextRequest) {
 	}
 
 	try {
-		const completion = await openai.createChatCompletion({
+		const res = await openai.createChatCompletion({
 			model: "gpt-3.5-turbo",
 			messages: [{ role: "user", content: parsed.data.prompt }],
+			max_tokens: 200,
+			temperature: 0.7,
+			top_p: 1,
+			frequency_penalty: 1,
+			presence_penalty: 1,
 		});
 
 		return NextResponse.json({
 			status: "success",
-			message: completion.data.choices[0].message?.content,
+			message: res.data.choices[0].message?.content,
 		});
 	} catch (e) {
 		return NextResponse.json({

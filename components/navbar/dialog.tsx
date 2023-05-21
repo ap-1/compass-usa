@@ -21,7 +21,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-async function getData(prompt: string) {
+export async function getData(prompt: string) {
+	const time = Date.now();
 	const res = await fetch("/api/query", {
 		method: "POST",
 		body: superjson.stringify({ prompt }),
@@ -31,6 +32,8 @@ async function getData(prompt: string) {
 		console.error(await res.json());
 		throw new Error("Failed to fetch data");
 	}
+
+	console.log(`Request time: ${(Date.now() - time) / 1000}`);
 
 	return res.json();
 }

@@ -11,6 +11,8 @@ import { Content } from "@/components/content";
 import { Button } from "@/components/ui/button";
 import { SignInButton } from "@/components/signIn";
 import { topics, icons, type Topic } from "@/components/navbar/pages";
+import { Configuration, OpenAIApi } from "openai";
+import { env } from "@/env.mjs";
 
 import {
 	Send,
@@ -23,7 +25,6 @@ import {
 	Album,
 	Loader2,
 } from "lucide-react";
-import superjson from "superjson";
 
 interface ArrowProps {
 	angle: number;
@@ -70,25 +71,34 @@ type Message = {
 	text: string;
 };
 
-async function getData(prompt: string) {
-	const res = await fetch("/api/query", {
-		method: "POST",
-		body: superjson.stringify({ prompt }),
-	});
-
-	if (!res.ok) {
-		console.error(await res.json());
-		throw new Error("Failed to fetch data");
-	}
-
-	return res.json();
-}
-
 // interface TopicHelperParams {
 // 	params: {
 // 		topic: Topic;
 // 	};
 // }
+
+const configuration = new Configuration({
+	apiKey: env.NEXT_PUBLIC_OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+async function clientQuery(content: string) {
+	const response = await openai.createChatCompletion({
+		model: "gpt-3.5-turbo",
+		// TODO: Pass in conversation history
+		messages: [{ role: "user", content }],
+		max_tokens: 200,
+		temperature: 0.7,
+		top_p: 1,
+		frequency_penalty: 1,
+		presence_penalty: 1,
+	});
+	const result = response.data.choices[0].message?.content;
+
+	if (!result) throw new Error("Failed to fetch data");
+
+	return result;
+}
 
 export default function Topic({ params }: any) {
 	const topic =
@@ -98,8 +108,8 @@ export default function Topic({ params }: any) {
 
 	const [loading, setLoading] = useState(false);
 	const [messages, setMessages] = useState<Message[]>([]);
-	const [sources, setSources] = useState([]);
-	const [links, setLinks] = useState([]);
+	const [sources, setSources] = useState<string[]>([]);
+	const [links, setLinks] = useState<string[]>([]);
 	const [input, setInput] = useState("");
 
 	const [arrowAngle, setArrowAngle] = useState(0);
@@ -146,8 +156,7 @@ export default function Topic({ params }: any) {
 		`;
 
 		setLoading(true);
-		getData(context)
-			.then((data) => data.message)
+		clientQuery(context)
 			.then((content) => {
 				setMessages((prevMessages) => [
 					...prevMessages,
@@ -161,10 +170,10 @@ export default function Topic({ params }: any) {
 					content
 						?.split("SOURCES:")[1]
 						?.split("LINKS:")[0]
-						?.split("\n")
+						?.split("\n") ?? []
 				);
 
-				setLinks(content?.split("LINKS:")[1]?.split("\n"));
+				setLinks(content?.split("LINKS:")[1]?.split("\n") ?? []);
 			})
 			.catch((e) => {
 				console.error(e);
@@ -172,7 +181,7 @@ export default function Topic({ params }: any) {
 					...prevMessages,
 					{
 						sender: "compass",
-						text: "There was an error. This can happen when OpenAI's endpoints are overloaded. Please try again later.",
+						text: "OpenAI's endpoints are overloaded. Please try again later.",
 					},
 				]);
 				setSources([]);
@@ -296,7 +305,7 @@ export default function Topic({ params }: any) {
 									<div className="flex flex-col flex-grow px-4 py-2 overflow-auto border-t-2 border-l-2 border-border">
 										<p className="flex items-center text-lg font-bold">
 											<LinkIcon className="inline w-4 h-4 mr-2 " />{" "}
-											SOURCES
+											Sources
 										</p>
 
 										{sources.map((source, index) => (
